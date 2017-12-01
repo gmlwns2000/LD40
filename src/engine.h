@@ -8,10 +8,7 @@ constexpr auto ldConfigFilename     = "ld40-config.xml";
 constexpr auto ldLogFilename        = "ld40-log.txt";
 constexpr auto ldLogDebugFilename   = "ld40-log-debug.txt";
 
-constexpr auto ldFramerateFontSize  = 50;
-constexpr auto ldFramerateCAP       = 60;
-constexpr auto ldFramerateTicks     = 1000 / ldFramerateCAP;
-
+constexpr auto ldFramerateFontSize  = 21;
 
 ldjam::WindowConfig ldWindowConfig  = {};
 TTF_Font *ldDebugFont               = nullptr;
@@ -20,7 +17,7 @@ TTF_Font *ldDebugFont               = nullptr;
 #ifdef SHIPPING
 bool ldShowFPS                      = false;
 #else
-bool ldShowFPS                      = true;
+bool ldShowDebugOverlay                      = true;
 #endif
 
 namespace ldjam

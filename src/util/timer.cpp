@@ -46,6 +46,11 @@ void ldjam::Timer::UnPause()
     }
 }
 
+void ldjam::Timer::Reset()
+{
+    m_startTicks = SDL_GetTicks();
+}
+
 uint32 ldjam::Timer::GetTicks()
 {
     Uint32 time = 0;

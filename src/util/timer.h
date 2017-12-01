@@ -13,6 +13,8 @@ namespace ldjam
         void Pause();
         void UnPause();
 
+        void Reset();
+
         uint32 GetTicks();
 
         bool Started();
