@@ -20,7 +20,7 @@ constexpr auto ldDisplayBaseHeight  = 600;
 #define LD_FONT_DIR                   "assets/fonts/"
 
 namespace ldjam
-{x
+{
     struct EngineRuntime
     {
         SDL_Window   *window                = nullptr;
