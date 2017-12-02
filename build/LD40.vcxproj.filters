@@ -14,6 +14,18 @@
     <ClCompile Include="..\src\util\timer.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\gamestate.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\intro_state.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\texturemanager.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\sprite.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\engine.h" />
@@ -32,6 +44,24 @@
     <ClInclude Include="..\src\util\timer.h">
       <Filter>util</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\game\gamestate.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\intro_state.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\texturemanager.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\stb_image.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\SDL_stbimage.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\sprite.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="xml">
@@ -39,6 +69,12 @@
     </Filter>
     <Filter Include="util">
       <UniqueIdentifier>{6299b098-ff09-4237-b70d-3672e43a1185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{2444402d-7adb-4735-9a6e-d8023c73a42d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{8d5cbb67-f070-4b1e-8512-f248d2e43258}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

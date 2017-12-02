@@ -90,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\external\glm\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -109,7 +109,7 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\external\glm\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -130,7 +130,7 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\external\glm\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -153,7 +153,7 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\external\glm\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -170,6 +170,10 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\game\gamestate.cpp" />
+    <ClCompile Include="..\src\game\intro_state.cpp" />
+    <ClCompile Include="..\src\graphics\sprite.cpp" />
+    <ClCompile Include="..\src\graphics\texturemanager.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\util\log.cpp" />
     <ClCompile Include="..\src\util\timer.cpp" />
@@ -178,6 +182,12 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\engine.h" />
+    <ClInclude Include="..\src\game\gamestate.h" />
+    <ClInclude Include="..\src\game\intro_state.h" />
+    <ClInclude Include="..\src\graphics\SDL_stbimage.h" />
+    <ClInclude Include="..\src\graphics\sprite.h" />
+    <ClInclude Include="..\src\graphics\stb_image.h" />
+    <ClInclude Include="..\src\graphics\texturemanager.h" />
     <ClInclude Include="..\src\util\log.h" />
     <ClInclude Include="..\src\util\timer.h" />
     <ClInclude Include="..\src\util\types.h" />

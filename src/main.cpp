@@ -2,19 +2,22 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 
 #include "engine.h"
 #include "util/log.h"
 #include "util/timer.h"
 #include "xml/windowloader.h"
+#include "game/gamestate.h"
+#include "game/intro_state.h"
 
 using namespace ldjam;
 
-void LoadConfig();
-void SaveConfig();
+void LoadConfig(EngineRuntime& rt);
+void SaveConfig(EngineRuntime& rt);
 
-void LoadFonts();
-void UnloadFonts();
+void LoadFonts(EngineRuntime& rt);
+void UnloadFonts(EngineRuntime& rt);
 
 void RenderDebugString(EngineRuntime& runtime, const char* str, int32 x, int32 y);
 
@@ -31,40 +34,42 @@ int main(int argc, char** argv)
 #endif
 
     // -- SDL2 init
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-        AbortProcess("Failed to initialize SDL2! Make sure that your drivers are updated.");
-    if (TTF_Init() < 0)
-        AbortProcess("Failed to initialize SDL_TTF! It's probably an issue with freetype");
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)         AbortProcess("Failed to initialize SDL2! Make sure that your drivers are updated.");
+    if (TTF_Init() < 0)                             AbortProcess("Failed to initialize SDL_TTF! It's probably an issue with freetype");
 
-    LoadConfig();
-    LoadFonts();
+    EngineRuntime rt;
 
-    EngineRuntime runtime;
+    LoadConfig(rt);
+    LoadFonts(rt);
 
-    runtime.window = SDL_CreateWindow(
+
+    rt.window = SDL_CreateWindow(
         "LudumDare #40",
-        ldWindowConfig.x, ldWindowConfig.y,
-        ldWindowConfig.width, ldWindowConfig.height,
+        rt.windowConfig.x, rt.windowConfig.y,
+        rt.windowConfig.width, rt.windowConfig.height,
         SDL_WINDOW_SHOWN);
 
-    if (!runtime.window)
+    if (!rt.window)
         AbortProcess("Failed to initialize SDL2 window!");
 
-    runtime.renderer = SDL_CreateRenderer(runtime.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!runtime.renderer)
+    rt.renderer = SDL_CreateRenderer(rt.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (!rt.renderer)
         AbortProcess("Failed to initialize SDL2 renderer!");
 
-    SDL_SetRenderDrawColor(runtime.renderer, 139, 0, 139, 255);
+    rt.textureManager = TextureManager(rt.renderer);
+
+    // Set clear color
+    SDL_SetRenderDrawColor(rt.renderer, 139, 0, 139, 255);
+
+    GameStateManager game(rt);
+    game.Init();
+    game.ChangeState(IntroState::Instance());
 
     SDL_Event sdlEvent;
-    bool running = true;
-
-
-    while (running)
+    while (game.Running())
     {
         // Compute FPS
         // ------------------------------------------------ //
-
         constexpr auto fpsAvgSampleCount = 10;
 
         static uint32 nowTime = 0;
@@ -86,91 +91,97 @@ int main(int argc, char** argv)
 
         cycleCount++;
 
+        // Update
+        // ------------------------------------------------ //
+        game.Update(rt, (float)elapsed / 1000.0f);
 
         // Event handling
         // ------------------------------------------------ //
-
-        runtime.keyboardState = SDL_GetKeyboardState(nullptr);
-        SDL_GetMouseState(&runtime.mouseState[0], &runtime.mouseState[1]);
+        rt.keyboardState = SDL_GetKeyboardState(nullptr);
+        SDL_GetMouseState(&rt.mouseState[0], &rt.mouseState[1]);
 
         while (SDL_PollEvent(&sdlEvent) != 0)
         {
-            if (sdlEvent.type == SDL_QUIT) running = false;
+            if (sdlEvent.type == SDL_QUIT) game.Quit();
         }
 
 #ifndef SHIPPING
-        if (runtime.keyboardState[SDL_SCANCODE_SLASH] == 1)
-            ldShowDebugOverlay = true;
+        if (rt.keyboardState[SDL_SCANCODE_SLASH] == 1)
+            rt.showDebugOverlay = true;
         else
-            ldShowDebugOverlay = false;
+            rt.showDebugOverlay = false;
 #endif
+        game.HandleEvents(rt);
 
         // Rendering
         // ------------------------------------------------ //
+        SDL_RenderClear(rt.renderer);
 
-        SDL_RenderClear(runtime.renderer);
+        game.Render(rt);
 
-        if (ldShowDebugOverlay)
-            RenderDebugString(runtime, std::string("FPS: ").append(std::to_string(fps)).c_str(), 0, 0);
-
-        SDL_RenderPresent(runtime.renderer);
+        if (rt.showDebugOverlay)
+            RenderDebugString(rt, std::string("FPS: ").append(std::to_string(fps)).c_str(), 0, 0);
+        
+        SDL_RenderPresent(rt.renderer);
     }
 
-    SaveConfig();
+    SaveConfig(rt);
 
     // Dipose everything
+    game.Cleanup();
+
     LD_LOG_DEBUG("Disposing SDL resources");
-    SDL_DestroyRenderer(runtime.renderer);
-    SDL_DestroyWindow(runtime.window);
+    SDL_DestroyRenderer(rt.renderer);
+    SDL_DestroyWindow(rt.window);
 
     TTF_Quit();
     SDL_Quit();
     return 0;
 }
 
-void LoadConfig()
+void LoadConfig(EngineRuntime& rt)
 {
     LD_LOG_INFO("Loading config");
-    ldWindowConfig = config::LoadWindow(ldConfigFilename);
+    rt.windowConfig = config::LoadWindow(ldConfigFilename);
 }
 
-void SaveConfig()
+void SaveConfig(EngineRuntime& rt)
 {
     LD_LOG_DEBUG("Saving current config to %s", ldConfigFilename);
     FILE* cfgFile = fopen(ldConfigFilename, "w");
 
-    config::WriteWindow(ldWindowConfig, cfgFile);
+    config::WriteWindow(rt.windowConfig, cfgFile);
 
     fclose(cfgFile);
 }
 
-void LoadFonts()
+void LoadFonts(EngineRuntime& rt)
 {
     LD_LOG_INFO("Loading fonts");
 
-    ldDebugFont = TTF_OpenFont("assets/fonts/Debug.ttf", ldFramerateFontSize);
-    if (!ldDebugFont) LD_LOG_ERROR("Failed to load font assets/fonts/Debug.ttf !");
+    rt.debugFont = TTF_OpenFont(LD_FONT_DIR "Debug.ttf", ldFramerateFontSize);
+    if (!rt.debugFont) LD_LOG_ERROR("Failed to load font assets/fonts/Debug.ttf !");
 }
 
-void UnloadFonts()
+void UnloadFonts(EngineRuntime& rt)
 {
     LD_LOG_INFO("Unloading fonts");
-    if (ldDebugFont) TTF_CloseFont(ldDebugFont);
+    if (rt.debugFont) TTF_CloseFont(rt.debugFont);
 }
 
-void RenderDebugString(EngineRuntime& runtime, const char *str, int32 x, int32 y)
+void RenderDebugString(EngineRuntime& rt, const char *str, int32 x, int32 y)
 {
-    SDL_Surface* surface = TTF_RenderText_Shaded(ldDebugFont,
+    SDL_Surface* surface = TTF_RenderText_Shaded(rt.debugFont,
         str,
         { 0, 255, 0, 255 },
         { 0, 0, 0, 0 });
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(runtime.renderer, surface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(rt.renderer, surface);
     if (texture)
     {
         SDL_Rect srcRect = { 0, 0, surface->w, surface->h };
         SDL_Rect dstRect = { x, y, surface->w, surface->h };
-        SDL_RenderCopy(runtime.renderer, texture, &srcRect, &dstRect);
+        SDL_RenderCopy(rt.renderer, texture, &srcRect, &dstRect);
     }
 
     SDL_FreeSurface(surface);
