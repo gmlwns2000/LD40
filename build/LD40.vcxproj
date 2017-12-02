@@ -90,11 +90,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\external\glm\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\external\SDL2\include;$(ProjectDir)..\external\glm\include;$(ProjectDir)..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+<<<<<<< HEAD
       <AdditionalLibraryDirectories>..\external\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+=======
+      <AdditionalLibraryDirectories>$(ProjectDir)..\external\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+>>>>>>> upstream/master
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
@@ -109,12 +113,20 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>..\external\SDL2\include;..\external\glm\include;..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>$(ProjectDir)..\external\SDL2\include;$(ProjectDir)..\external\glm\include;$(ProjectDir)..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> upstream/master
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+<<<<<<< HEAD
       <AdditionalLibraryDirectories>..\external\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+=======
+      <AdditionalLibraryDirectories>$(ProjectDir)..\external\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+>>>>>>> upstream/master
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
@@ -130,13 +142,17 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>G:\Users\Matyas\Projects\LD40\external\SDL2\include;G:\Users\Matyas\Projects\LD40\external\glm\include;G:\Users\Matyas\Projects\LD40\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\external\SDL2\include;$(ProjectDir)..\external\glm\include;$(ProjectDir)..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+<<<<<<< HEAD
       <AdditionalLibraryDirectories>..\external\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+=======
+      <AdditionalLibraryDirectories>$(ProjectDir)..\external\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+>>>>>>> upstream/master
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
@@ -153,14 +169,22 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>..\external\SDL2\include;..\external\glm\include;..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>$(ProjectDir)..\external\SDL2\include;$(ProjectDir)..\external\glm\include;$(ProjectDir)..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> upstream/master
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+<<<<<<< HEAD
       <AdditionalLibraryDirectories>..\external\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+=======
+      <AdditionalLibraryDirectories>$(ProjectDir)..\external\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+>>>>>>> upstream/master
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
@@ -171,7 +195,7 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\game\gamestate.cpp" />
-    <ClCompile Include="..\src\game\intro_state.cpp" />
+    <ClCompile Include="..\src\game\menu_state.cpp" />
     <ClCompile Include="..\src\graphics\sprite.cpp" />
     <ClCompile Include="..\src\graphics\texturemanager.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -183,7 +207,7 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
   <ItemGroup>
     <ClInclude Include="..\src\engine.h" />
     <ClInclude Include="..\src\game\gamestate.h" />
-    <ClInclude Include="..\src\game\intro_state.h" />
+    <ClInclude Include="..\src\game\menu_state.h" />
     <ClInclude Include="..\src\graphics\SDL_stbimage.h" />
     <ClInclude Include="..\src\graphics\sprite.h" />
     <ClInclude Include="..\src\graphics\stb_image.h" />

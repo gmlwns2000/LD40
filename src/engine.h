@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <glm/glm.hpp>
 
 #include "xml/windowloader.h"
 #include "util/types.h"
@@ -10,7 +11,10 @@ constexpr auto ldConfigFilename     = "ld40-config.xml";
 constexpr auto ldLogFilename        = "ld40-log.txt";
 constexpr auto ldLogDebugFilename   = "ld40-log-debug.txt";
 
-constexpr auto ldFramerateFontSize  = 21;
+constexpr auto ldFramerateFontSize  = 50;
+
+constexpr auto ldDisplayBaseWidth   = 800;
+constexpr auto ldDisplayBaseHeight  = 600;
 
 #define LD_TEXTURE_DIR                "assets/textures/"
 #define LD_FONT_DIR                   "assets/fonts/"
@@ -23,7 +27,7 @@ namespace ldjam
         SDL_Renderer *renderer              = nullptr;
                                             
         const uint8  *keyboardState         = nullptr;
-        int           mouseState[2]         = { 0, 0 };
+        glm::ivec2    mousePosition         = { 0, 0 };
 
         ldjam::WindowConfig windowConfig    = {};
         TTF_Font *debugFont                 = nullptr;
