@@ -34,8 +34,10 @@ int main(int argc, char** argv)
 #endif
 
     // -- SDL2 init
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)         AbortProcess("Failed to initialize SDL2! Make sure that your drivers are updated.");
-    if (TTF_Init() < 0)                             AbortProcess("Failed to initialize SDL_TTF! It's probably an issue with freetype");
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+		AbortProcess("Failed to initialize SDL2! Make sure that your drivers are updated.");
+    if (TTF_Init() < 0)
+		AbortProcess("Failed to initialize SDL_TTF! It's probably an issue with freetype");
 
     EngineRuntime rt;
 
@@ -65,37 +67,35 @@ int main(int argc, char** argv)
     game.Init();
     game.ChangeState(MenuState::Instance());
 
+	float fpsCount = 0;
+	int elapsed = 0;
+	float elapsAll = 0;
+	float fps = 0;
+	int nowTime = 0;
+	int lastTime = 0;
     SDL_Event sdlEvent;
     while (game.Running())
     {
         // Compute FPS
         // ------------------------------------------------ //
-        constexpr auto fpsAvgSampleCount = 10;
-
-        static uint32 nowTime = 0;
-        static uint32 lastTime = 0;
-        static uint32 cycleCount = 0;
-
         lastTime = nowTime;
         nowTime = SDL_GetTicks();
-        uint32 elapsed = nowTime - lastTime;
+        elapsed = nowTime - lastTime;
+		if (fpsCount > 100) 
+		{
+			fpsCount = 0;
+			elapsAll = 0;
+		}
+		elapsAll += elapsed;
+		fpsCount++;
 
-        static uint32 frameTimes[fpsAvgSampleCount];
-        frameTimes[cycleCount % fpsAvgSampleCount] = elapsed;
-
-        uint32 fpsTicks = 0;
-        for (uint32 i = 0; i < fpsAvgSampleCount; i++)
-            fpsTicks += frameTimes[i];
-
-        float fps = 1000.0f / (fpsTicks / fpsAvgSampleCount);
-
-        cycleCount++;
+        fps = 1000.0f / (elapsAll / fpsCount);
 
         // Update
         // ------------------------------------------------ //
         game.Update(rt, (float)elapsed / 1000.0f);
 
-        // Event handling
+        // Event handlingb
         // ------------------------------------------------ //
         rt.keyboardState = SDL_GetKeyboardState(nullptr);
         
@@ -103,7 +103,6 @@ int main(int argc, char** argv)
 
         rt.mousePosition.x /= ((double)rt.windowConfig.width / ldDisplayBaseWidth);;
         rt.mousePosition.y /= ((double)rt.windowConfig.height / ldDisplayBaseHeight);;
-
 
         while (SDL_PollEvent(&sdlEvent) != 0)
         {
