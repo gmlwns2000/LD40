@@ -9,7 +9,7 @@
 #include "util/timer.h"
 #include "xml/windowloader.h"
 #include "game/gamestate.h"
-#include "game/intro_state.h"
+#include "game/menu_state.h"
 
 using namespace ldjam;
 
@@ -42,7 +42,6 @@ int main(int argc, char** argv)
     LoadConfig(rt);
     LoadFonts(rt);
 
-
     rt.window = SDL_CreateWindow(
         "LudumDare #40",
         rt.windowConfig.x, rt.windowConfig.y,
@@ -59,11 +58,12 @@ int main(int argc, char** argv)
     rt.textureManager = TextureManager(rt.renderer);
 
     // Set clear color
-    SDL_SetRenderDrawColor(rt.renderer, 139, 0, 139, 255);
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+    SDL_SetRenderDrawColor(rt.renderer, 0, 0, 0, 255);
 
     GameStateManager game(rt);
     game.Init();
-    game.ChangeState(IntroState::Instance());
+    game.ChangeState(MenuState::Instance());
 
     SDL_Event sdlEvent;
     while (game.Running())
@@ -98,13 +98,20 @@ int main(int argc, char** argv)
         // Event handling
         // ------------------------------------------------ //
         rt.keyboardState = SDL_GetKeyboardState(nullptr);
-        SDL_GetMouseState(&rt.mouseState[0], &rt.mouseState[1]);
+        
+        SDL_GetMouseState(&rt.mousePosition.x , &rt.mousePosition.y);
+
+        rt.mousePosition.x /= ((double)rt.windowConfig.width / ldDisplayBaseWidth);;
+        rt.mousePosition.y /= ((double)rt.windowConfig.height / ldDisplayBaseHeight);;
+
 
         while (SDL_PollEvent(&sdlEvent) != 0)
         {
             if (sdlEvent.type == SDL_QUIT) game.Quit();
         }
 
+        SDL_GetWindowPosition(rt.window, &rt.windowConfig.x, &rt.windowConfig.y);
+        
 #ifndef SHIPPING
         if (rt.keyboardState[SDL_SCANCODE_SLASH] == 1)
             rt.showDebugOverlay = true;

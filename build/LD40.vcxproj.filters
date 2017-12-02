@@ -17,14 +17,14 @@
     <ClCompile Include="..\src\game\gamestate.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\game\intro_state.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\graphics\texturemanager.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\sprite.cpp">
       <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\menu_state.cpp">
+      <Filter>game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,9 +47,6 @@
     <ClInclude Include="..\src\game\gamestate.h">
       <Filter>game</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\game\intro_state.h">
-      <Filter>game</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\graphics\texturemanager.h">
       <Filter>graphics</Filter>
     </ClInclude>
@@ -61,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="..\src\graphics\sprite.h">
       <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\menu_state.h">
+      <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

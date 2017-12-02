@@ -171,7 +171,7 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\game\gamestate.cpp" />
-    <ClCompile Include="..\src\game\intro_state.cpp" />
+    <ClCompile Include="..\src\game\menu_state.cpp" />
     <ClCompile Include="..\src\graphics\sprite.cpp" />
     <ClCompile Include="..\src\graphics\texturemanager.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -183,7 +183,7 @@ xcopy "$(ProjectDir)..\assets\*.*" "$(TargetDir)assets" /e /i /y /s
   <ItemGroup>
     <ClInclude Include="..\src\engine.h" />
     <ClInclude Include="..\src\game\gamestate.h" />
-    <ClInclude Include="..\src\game\intro_state.h" />
+    <ClInclude Include="..\src\game\menu_state.h" />
     <ClInclude Include="..\src\graphics\SDL_stbimage.h" />
     <ClInclude Include="..\src\graphics\sprite.h" />
     <ClInclude Include="..\src\graphics\stb_image.h" />

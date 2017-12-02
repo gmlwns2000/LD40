@@ -1,18 +1,34 @@
 #include "sprite.h"
 
-void ldjam::RenderSprite(EngineRuntime& rt, const Sprite& sprite, SDL_RendererFlip flipMode)
+void ldjam::RenderSprite(EngineRuntime& rt, Sprite& sprite, SDL_RendererFlip flipMode)
 {
-    SDL_Rect clipQuad = 
+    // Aspect ratio - always 800:600
+    double positionDt = ((double)rt.windowConfig.width / ldDisplayBaseWidth);
+
+    SDL_Rect clipQuad =
     {
         0, 0,
-        sprite.size.x, sprite.size.y
+        sprite.GetBaseSize().x, sprite.GetBaseSize().y
     };
 
     SDL_Rect renderQuad =
     {
-        sprite.position.x, sprite.position.y,
-        sprite.size.x, sprite.size.y
+        sprite.position.x * positionDt, sprite.position.y * positionDt,
+        sprite.size.x * positionDt, sprite.size.y * positionDt
     };
 
-    SDL_RenderCopyEx(rt.renderer, sprite.texture, &clipQuad, &renderQuad, sprite.rotation, nullptr, flipMode);
+    SDL_RenderCopyEx(rt.renderer, sprite.GetTexture(), &clipQuad, &renderQuad, sprite.rotation, nullptr, flipMode);
 }
+
+void ldjam::Sprite::SetTexture(SDL_Texture * texture)
+{
+    m_texture = texture;
+
+    SDL_QueryTexture(texture, nullptr, nullptr, &m_baseSize.x, &m_baseSize.y);
+}
+
+SDL_Texture* ldjam::Sprite::GetTexture()
+{
+    return m_texture;
+}
+
